@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bitcore-lib": "^10.0.28"
+    "axios": "^1.6.8",
+    "bitcore-lib": "^10.0.28",
+    "dotenv": "^16.4.5"
   }
 }

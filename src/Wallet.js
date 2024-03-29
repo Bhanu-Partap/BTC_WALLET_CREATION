@@ -1,5 +1,6 @@
 const { PrivateKey } = require("bitcore-lib");
 const { mainnet, testnet } = require("bitcore-lib/lib/networks");
+const axios =  require("axios")
 
 const createLegacyWallet = (network = testnet) => {
   let privateKey = new PrivateKey();
@@ -11,6 +12,22 @@ const createLegacyWallet = (network = testnet) => {
   }
 }
 
+const getBalance = async () => {
+    let totalAmountAvailable = 0;
+  
+    const response = await axios.get(
+      `${process.env.UTXO_API}/${process.env.WALLET_ADDRESS}?includeScript=true&unspentOnly=true`
+    );
+  
+    for (const element of response.data.txrefs) {
+      totalAmountAvailable += element.value;
+    }
+  
+    return totalAmountAvailable;
+  }
+  
+
 module.exports = {
-  createLegacyWallet
+  createLegacyWallet,
+  getBalance
 }
